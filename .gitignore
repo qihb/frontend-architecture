@@ -39,3 +39,9 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+
+# AI 工具配置
+.trae/
+
+# 文档审校记录
+docs/

@@ -1,4 +1,4 @@
-# 第四篇：qiankun深度解析（上）——原理与架构
+# 第四篇：qiankun 深度解析（上）——原理与架构
 
 **核心要点：**
 - qiankun 的背景：阿里开源，基于 single-spa 封装，增强了微前端应用编排能力
@@ -9,7 +9,7 @@
 - 子应用生命周期：bootstrap、mount、unmount
 - HTML Entry 加载方式
 - 预加载机制：在用户访问前预先加载子应用资源，提升切换体验
-- 版本演进：qiankun 3.0 在保留 HTML Entry 与生命周期模型的基础上，重写运行时并引入原生 ESM 支持，实例管理方式更灵活
+- 版本演进：qiankun 3.0（rc/开发阶段）在保留 HTML Entry 与生命周期模型的基础上，重写运行时并引入原生 ESM 支持
 
 ## 一、开篇：qiankun 是什么？
 
@@ -57,6 +57,8 @@ flowchart TB
 
     A --> B --> C --> D --> E
 ```
+
+> 说明：图中箭头表达的是逻辑上的组合 / 依赖关系，并非严格的运行时调用链；第 5 层“适配层”属于子应用侧的横向接入契约（暴露 `bootstrap` / `mount` / `unmount`），由主应用在运行时调用。
 
 如果从理解角度再压缩一下，qiankun 的价值其实就是三件事：
 
@@ -161,6 +163,8 @@ function reroute() {
 
 这里要特别说明一下：上面的代码是为了讲原理做的简化版。真实实现里，qiankun 底层复用了 single-spa 的调度机制，匹配时也不只是机械地盯着 `pathname`，而是会结合你定义的 `activeRule` 来判断 `location` 的具体部分。
 
+而且真实流程并不是上面那种“同步 forEach 遍历”就能概括的：single-spa 的 `reroute` 是**异步调度**，每个应用都带一个完整的状态机（`NOT_LOADED → LOAD_SOURCE_CODE → BOOTSTRAPPING → NOT_MOUNTED → MOUNTED`…），并且**加载与挂载是分离的两步**——首次进入某个路由，要走 load → bootstrap → mount 的完整链路；之后再切回来，应用已经 load 过了，只需重新 mount。这也是为什么 qiankun 的路由切换通常比“每次从零加载”轻得多。
+
 ### 3.4 路由劫持的整体流程
 
 ```mermaid
@@ -200,6 +204,8 @@ qiankun 的 JS 沙箱大致经历了三代演进。
 
 第一代思路比较直接：**进入子应用前，把当前 `window` 拍一张快照；离开时，再把全局环境恢复回去。**
 
+> ⚠️ 示意代码：为便于讲原理做的简化实现，细节与 qiankun 真实实现有出入，请勿照抄。
+
 ```js
 class SnapshotSandbox {
   constructor() {
@@ -232,18 +238,27 @@ class SnapshotSandbox {
 
 第二代开始使用 `Proxy`。它的核心思路是：
 
-**不再每次都全量拍快照，而是代理对 `window` 的访问，把“改了哪些东西”记录下来，退出时再还原。**
+**不再每次都全量拍快照，而是代理对 `window` 的访问，把“改了哪些东西”记录下来，退出时再还原。**这里要小心“还原”的含义：子应用既可能“新增”属性，也可能“改写”了进入前就存在的全局属性——对前者退出时要删除，对后者则要恢复原值。否则一个进入前值为 `1` 的全局变量，被子应用改成 `2` 后退出会直接消失成 `undefined`，反而破坏了沙箱要保护的共享环境。
+
+> ⚠️ 示意代码：为便于讲原理大幅简化（核心思想与 qiankun 真实实现一致，真实实现还会处理更多边界），请勿照抄进生产代码。
 
 ```js
 class LegacySandbox {
   constructor() {
-    this.modifyProps = {};
+    this.addedPropsMap = {};            // 沙箱期间新增的属性 → 退出时删除
+    this.modifiedPropsOriginalMap = {}; // 被改写的既有属性 → 退出时还原原值
     this.isActive = false;
 
     this.proxy = new Proxy(window, {
       set: (target, key, value) => {
         if (this.isActive) {
-          this.modifyProps[key] = value;
+          if (!(key in target)) {
+            // 新增属性：记入新增表
+            this.addedPropsMap[key] = value;
+          } else if (!(key in this.modifiedPropsOriginalMap)) {
+            // 改写既有属性：先记下原值（只记第一次）
+            this.modifiedPropsOriginalMap[key] = target[key];
+          }
           target[key] = value;
         }
         return true;
@@ -258,10 +273,16 @@ class LegacySandbox {
 
   inactive() {
     this.isActive = false;
-    for (const key in this.modifyProps) {
+    // 先还原被改写的既有属性
+    for (const key in this.modifiedPropsOriginalMap) {
+      window[key] = this.modifiedPropsOriginalMap[key];
+    }
+    // 再删除沙箱期间新增的属性
+    for (const key in this.addedPropsMap) {
       delete window[key];
     }
-    this.modifyProps = {};
+    this.addedPropsMap = {};
+    this.modifiedPropsOriginalMap = {};
   }
 }
 ```
@@ -273,6 +294,8 @@ class LegacySandbox {
 这是更接近当前主流实现的方案。
 
 它的核心变化在于：**每个子应用不再共享同一个代理上下文，而是各自拥有独立的 `fakeWindow`。**
+
+> ⚠️ 示意代码：同上，为便于讲原理简化；真实的 ProxySandbox 在 get 等陷阱上还有更多处理（详见 4.4 的补充说明）。
 
 ```js
 class ProxySandbox {
@@ -323,6 +346,11 @@ flowchart LR
 | LegacySandbox | `Proxy` 代理全局对象 | 否 | 中等 | 一次只激活一个子应用 |
 | ProxySandbox | `Proxy` + 独立 `fakeWindow` | 是 | 较优 | 现代主流方案 |
 
+这张表背后，还有两点值得展开，能帮你把“为什么会这样取舍”看透：
+
+1. **快照沙箱并不是被“淘汰”了，它仍是低版本环境的兜底**：`Proxy` 无法在低版本浏览器里被 polyfill，因此当运行环境不支持 `Proxy` 时，qiankun 只能退回快照式方案——代价就是每次激活都要全量遍历 `window`，性能差、且天然只支持单实例。表里的“性能 / 单实例限制”，本质都是“要不要兼容老浏览器”的取舍结果。
+2. **真实沙箱做的事远不止“代理读写”**：为了防“逃逸”，真实的 Proxy 沙箱还会做一批收尾处理——让 `window.window` / `window.self` / `window.top` / `window.parent` 都指向代理自身，防止子应用绕开代理直接摸到真实的全局对象；通过 `has`、`getOwnPropertyDescriptor` 等陷阱应对 styled-components 这类依赖属性探测的库；并在应用卸载时回收它注册的定时器、事件监听和动态插入的样式——前文反复强调的“卸载时把现场清干净”，主要就是这层机制在承担。
+
 从架构演进上看，qiankun 的 JS 沙箱其实是在不断回答同一个问题：
 
 **既要让子应用有“独立运行”的感觉，又不能真的给每个子应用开一个浏览器上下文。**
@@ -346,6 +374,8 @@ flowchart LR
 2. 主应用不用手动管理子应用样式资源的插入和清理
 
 但它解决的是“**样式生命周期管理**”，不等于“**样式绝对隔离**”。
+
+还要看清官方口径下默认隔离的边界：**它只保证“单实例场景下、子应用之间”的样式隔离，并不保证主应用与子应用之间、或多实例场景下子应用之间的样式隔离。**想要更彻底的隔离，需要显式开启下面 5.2 / 5.3 的策略，或配合组件库的 CSS-in-JS / CSS Modules 等工程手段。
 
 ### 5.2 `strictStyleIsolation`：基于 Shadow DOM 的严格隔离
 
@@ -418,6 +448,7 @@ start({
 
 - 对 `html`、`body`、`:root` 这类全局选择器处理有限
 - 对运行时动态插入样式的场景，需要额外观察
+- 不会改写 `@keyframes`、`@font-face`、`@import`、`@page` 等规则，动画帧、字体等定义仍可能全局泄漏
 - 隔离强度不如 Shadow DOM
 
 ### 5.4 两种样式隔离策略怎么选？
@@ -443,6 +474,8 @@ registerApplication({
 });
 ```
 
+> ⚠️ 示意代码：这里用远程 URL 的动态 import 只为做“反例”对照，打包器并不能直接编译运行这种写法。single-spa 官方实际是配合 import map + SystemJS 使用（`System.import('app-a')`，见第 3 篇），此处不要照抄。
+
 这种方式当然能用，但它会暴露出一个问题：
 
 **浏览器真正加载一个前端应用，通常不只是加载 JS。**
@@ -461,19 +494,29 @@ registerApplication({
 registerMicroApps([
   {
     name: 'app-a',
-    entry: '//localhost:3001/',
+    // entry 也可以是对象形式：直接声明要加载的 JS / CSS，而不必先请求一份 HTML
+    entry: {
+      scripts: ['//localhost:3001/js/app-a.js'],
+      styles: ['//localhost:3001/css/app-a.css'],
+    },
     container: '#app-a',
     activeRule: '/a',
   },
 ]);
 ```
 
-当 qiankun 请求 `//localhost:3001/` 时，大致会做这些事情：
+对象形式把要加载的资源点得很直接；而更贴近真实前端应用的是把 `entry` 指向 HTML 地址（字符串写法见 3.3 节）。当 qiankun 请求 `//localhost:3001/`、拿回 HTML 时，大致会做这些事情：
 
 1. 拉取完整 HTML
 2. 解析出 `<link>`、`<style>` 等样式资源
 3. 解析出 `<script>` 并放进 JS 沙箱执行
 4. 提取应用内容并挂载到主应用容器里
+
+这里的“解析”远不只是把 HTML 字符串拼进页面，背后（qiankun 复用了 import-html-entry 库）其实有几件“重活”：
+
+- **模板改写**：解析并移出 `<link>` / `<style>` / `<script>` 时，会把 `href` / `src` 中的相对地址改写成基于子应用真实部署地址的绝对地址——否则这些资源一旦挪到主应用页面里，会按主应用的 URL 去解析而错位；
+- **外链 script 的执行方式**：为了把脚本放进沙箱执行，同时保证执行顺序与错误可追踪，外链 `<script>` 会被改为先拉取文本、再以字符串方式执行，而不是简单插一个 `<script>` 标签；
+- **publicPath 重写**：执行前会把子应用的 `__webpack_public_path__` 指向其真实部署目录，让运行时按需加载的 chunk、图片等相对资源解析正确——这正是上面“部署目录 / 静态资源路径”约束的底层来源。
 
 比如子应用返回的 HTML 可能是这样：
 
@@ -518,6 +561,8 @@ HTML Entry 的价值在于它**明显降低了接入改造成本**，但这里�
 所以更准确的说法是：
 
 **HTML Entry 让微前端接入更像接一个完整前端应用，而不是只接一段 JS。**
+
+这个取舍也划出了 qiankun 与其它路线的核心分岔点：它选择“HTML Entry + 同上下文 Proxy 沙箱”，换来的是低接入改造成本，代价是隔离强度弱于 iframe / Shadow DOM 这类“真隔离”方案。micro-app（Web Components 思路）、wujie（iframe 沙箱思路）正是在这个坐标系里的其它答案——路线全景见第 3 篇，框架级对比留到第 7 篇展开。
 
 ## 七、子应用生命周期：`bootstrap` → `mount` → `unmount`
 
@@ -566,6 +611,8 @@ flowchart LR
     C --> D[unmount]
     D --> C
 ```
+
+> 图注：上图为了简洁画成了回环。完整的官方状态机里，`unmount` 后应用会回到“未挂载”（NOT_MOUNTED）状态，下次激活时直接重新 `mount`，`bootstrap` 不再执行。
 
 这里最容易被忽略的一点是：
 
@@ -645,13 +692,17 @@ flowchart TB
 
 为了解决这个问题，qiankun 提供了预加载能力，也就是在用户真正访问之前，先把未来可能要用到的子应用资源提前拉下来。
 
-常见配置方式如下：
+而且**预加载默认就是开启的**：`prefetch` 的默认值是 `true`，语义是“第一个子应用完成 mount 之后、浏览器空闲时，预取其余子应用的 HTML / CSS / JS”。
+
+如果想主应用 `start` 后立刻预取全部子应用，可以显式配成：
 
 ```js
 start({
-  prefetch: true,
+  prefetch: 'all',
 });
 ```
+
+（本系列第 5 篇的实践示例使用的就是 `'all'` 口径。）`prefetch` 也支持传应用名数组或自定义函数，只挑关键子应用预取；需要更精细控制时，还可以手动调用 `prefetchApps(apps)`。
 
 它的核心收益是：
 
@@ -659,11 +710,11 @@ start({
 2. **让路由切换更平滑**
 3. **适合后台系统这类“菜单可预测”的场景**
 
-它的思路可以简单画成这样：
+触发时点取决于你配置的值，思路可以简单画成这样：
 
 ```mermaid
 flowchart LR
-    A[主应用首屏完成] --> B[浏览器空闲时段]
+    A[预加载被触发<br/>默认 true：首个子应用 mount 后<br/>配 'all'：start 后立即] --> B[浏览器空闲时段]
     B --> C[预取子应用 HTML / CSS / JS]
     C --> D[用户真正点击菜单]
     D --> E[命中缓存或已下载资源]
@@ -692,6 +743,8 @@ qiankun 2.x 的核心贡献，是把基于 single-spa 的微前端编排能力�
 
 ### 10.2 为什么 3.0 值得关注？
 
+先校准一下状态：**截至本文核验（2026-09），qiankun 3.0 仍处于 rc / 密集开发阶段**——npm 上需通过 `qiankun@rc` 安装（`latest` 仍指向 2.x），API 也还在演进，例如 rc 版本里 `registerMicroApps` 的 `container` 已从字符串选择器改为直接接收 DOM 元素。所以现阶段生产环境仍以 2.x 为主，下面这段是帮你理解演进方向，而不是“现在就该迁移”的信号。
+
 随着前端工程体系变化，新的问题出现了：
 
 - 越来越多项目转向 Vite
@@ -704,7 +757,16 @@ qiankun 2.x 的核心贡献，是把基于 single-spa 的微前端编排能力�
 
 1. **运行时重写**：让微前端运行时更加现代化
 2. **原生 ESM 支持**：更好适配 Vite 等新一代构建体系
-3. **实例化管理更灵活**：不再只围绕传统路由挂载心智，也更适合 `loadMicroApp` 这类手动实例化场景
+3. **实例化管理更灵活**：`loadMicroApp` 这类手动加载能力其实自 2.x 就已提供（适合局部嵌入、不依赖路由的场景），3.0 是继续强化这类实例化体验，而不是把它当作全新概念引入
+
+落到机制层面，3.0 与 2.x 的差异也远不止“重写”两个字：
+
+- 原生 ESM 并非简单地让浏览器去原生加载，而是让子应用的 `<script type="module">` 经过“隔离膜”路由，并配合动态注入的 import map 完成模块解析——动态 `import()` 可用，Vite 的 dev server 也因此可以直接接入，不再依赖社区插件
+- 样式隔离从 2.x 的“属性前缀重写 / Shadow DOM”演进为基于 CSS `@scope` 的运行时作用域方案
+- HTML 入口由整份拉取改为流式加载
+- 运行时拆出独立的沙箱包，并提供 React / Vue 的 UI 绑定（如 `<MicroApp/>`）
+
+具体 API 形态与路线图仍会随 rc 版本迭代调整，建议以 [qiankun 官方仓库的 next 分支](https://github.com/umijs/qiankun/tree/next) 为准。
 
 ### 10.3 2.x 和 3.0 的理解方式有什么不同？
 
@@ -734,3 +796,5 @@ mindmap
 ## 十一、小结
 
 回到开头那句话，qiankun 之所以重要，不是因为它重新发明了微前端，而是因为它把微前端真正做成了一套更容易落地的运行时方案。
+
+下一篇《qiankun 深度解析（下）》会把视角从“原理”切到“实战与踩坑”：走一遍主应用与子应用的标准接入流程，给出 Vite 等现代工程体系的适配路径，并整理一份高频问题清单；番外篇还会搭一个 qiankun3-lab 试验台，直接用 rc 版体验 3.0 的这些新特性。

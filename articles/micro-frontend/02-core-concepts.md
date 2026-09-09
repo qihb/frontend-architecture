@@ -99,6 +99,8 @@ flowchart TD
 
 这意味着，主应用在用户访问某个路由时，再按规则加载对应的子应用资源并完成挂载。只要接入协议稳定，某个子应用更新后，其他子应用通常不需要重新构建。
 
+这里要注意：运行时集成带来的不只是“能拼起来”，还有一系列随之而来的机制问题——JS 沙箱、样式隔离、生命周期管理、资源调度。它们大多是把浏览器（iframe 场景）或单体内部天然处理好的事，重新在“同一个页面上下文”里手工补上；其中样式隔离会在第九篇专门展开。
+
 下面这张图可以帮助理解“运行时集成”到底在浏览器里发生了什么：
 
 ```mermaid
@@ -113,6 +115,14 @@ flowchart LR
 
 如果你是第一次接触这个概念，可以先记住一句最朴素的话：**微前端不是先打成一个包再展示，而是先进入主应用，再按需把子应用“拼起来”。**
 
+**顺带认识几个运行时概念。** 后面讲具体落地时，你会反复碰到几组词，这里先各用一句话对齐：
+
+- **生命周期**：子应用暴露给主应用的启动、挂载、卸载钩子（通常命名为 `bootstrap` / `mount` / `unmount`），框架据此决定何时把子应用“放进来”、何时“清出去”
+- **注册与加载**：主应用维护一张“注册表”，登记子应用的路由激活规则（如 `/user`），路由命中时再由加载器去拉取对应资源
+- **入口形态**：HTML Entry 让框架拿到子应用 HTML 后自行解析其中的 JS/CSS；JS Entry 则是直接提供打包产物地址，通常需要配合 SystemJS / import map 这类机制解析
+
+这些机制在不同框架里的具体实现差异，正是第四、五篇要展开的重点。
+
 ## 二、三大核心优势：为什么要用微前端
 
 把基本概念对齐之后，接下来就要看一个更现实的问题：微前端到底值不值得做？
@@ -125,11 +135,11 @@ flowchart LR
 
 不同团队可以根据自己的业务特点选择更合适的技术方案。
 
-- 老团队维护遗留系统继续使用 AngularJS，不必为了统一技术栈而整体推翻
-- 新团队开发创新功能使用 React + TypeScript，提升新模块的工程体验
-- 活动型页面使用 Vue + Vite，换取更快的开发和构建速度
+- 面向运营的营销活动页用 jQuery 或轻量方案快速交付，追求几周内上线
+- 数据报表、大屏这类可视化模块用 React + ECharts / D3.js 生态，发挥其渲染能力
+- 核心交易链路继续沿用已被长期验证的稳定技术栈，等待渐进替换而不是推倒重来
 
-一个很典型的真实场景是：某银行理财后台里，核心交易模块继续使用稳定的 Vue 2，而新的数据分析看板采用 React 18 + D3.js。两者最终仍然可以出现在同一个系统里。对用户来说，这是一套产品；对团队来说，却是两条可以独立演进的技术路径。
+技术栈自由的本质，不是鼓励堆叠框架，而是把“选什么技术”的决策权交还给最了解业务的团队：同样一个系统里，核心链路可以用最稳的方案，创新模块可以用最快的组合，两者各取所需、互不拖累。
 
 ### 2. 渐进式重构
 
@@ -165,6 +175,8 @@ flowchart LR
 ## 三、三大挑战：微前端不是没有代价
 
 聊完优势，也得把代价讲清楚。
+
+第一篇在“微前端又带来了哪些问题”里，按“会踩到什么坑”的角度列了四类问题（拆分颗粒度、首屏与切换体验、状态与通信、监控治理）；这里我们换个角度，按“长期运行最需要治理的对象”把它们重新收敛成三类：协作与规范、性能与资源、状态与通信。监控、回滚这类配套不在其中单列，因为它们会分散到每一类里反复出现。
 
 微前端能解决很多问题，但它从来不是“拆开就轻松了”。相反，它会把原本被单体系统掩盖的一些问题，直接暴露出来。
 
@@ -202,7 +214,7 @@ app-b.js: 包含 react + react-dom + antd（约 800KB）
 // 用户总共下载了 1.6MB，其中很大一部分是重复内容
 ```
 
-这时候就需要做依赖治理。`Module Federation` 的 `shared` 是一种很常见的实现方式：
+这时候就需要做依赖治理。`Module Federation` 的 `shared` 是一种很常见的实现方式（下面是省略了 `name`、`filename`、`exposes` 等选项的**配置片段**，只示意 `shared` 的写法）：
 
 ```javascript
 new ModuleFederationPlugin({
@@ -212,6 +224,8 @@ new ModuleFederationPlugin({
   }
 })
 ```
+
+这两个选项背后是一套**运行时版本协商**：`singleton: true` 表示整个运行时只保留一份共享依赖（例如只加载一个 React），当各子应用要求的版本不一致时取较高版本，并对低版本的一方告警；`requiredVersion` 则用于声明“低于这个版本不可用”的版本下限。所谓“共享依赖避免重复下载”，靠的正是这种协商，而不是构建期强行合并。
 
 当然，`shared` 不是唯一方案。根据具体架构，你也可以通过外部依赖抽离、CDN 复用、预加载、缓存策略和资源拆包来降低重复下载和初始化开销。核心目标只有一个：**避免每个子应用都把公共依赖重新带一遍。**
 
@@ -287,6 +301,8 @@ globalStore.subscribe('user', (nextUser) => {
 
 这里我更推荐借助领域驱动设计（Domain-Driven Design，DDD）的思路来做拆分。它最核心的一句话是：**优先按业务领域划分边界，而不是按技术层划分边界。**
 
+说得更精确一点，DDD 里的“领域”对应的是**限界上下文（Bounded Context）**——把每个业务域建模为一块有清晰边界、内部使用统一语言（Ubiquitous Language）的范围，跨上下文之间的通信只发生在边界上的少量接口。微前端里的“子应用边界”，本质上就是在技术侧复刻这套上下文边界；借用 DDD，是为了让“拆哪里、不拆哪里”有据可依，而不是凭感觉随手切。
+
 ### 错误的拆法：按技术层拆
 
 很多团队第一次做拆分时，都会下意识地往“技术分层”上靠：
@@ -325,7 +341,7 @@ globalStore.subscribe('user', (nextUser) => {
 - 子应用之间的依赖要尽量低耦合
 - 跨应用通信应该是少量、明确、可约束的
 
-如果两个子应用天天高频通信、彼此大量依赖对方的数据结构和页面行为，那往往说明边界划分得还不够好。
+如果两个子应用天天高频通信、彼此大量依赖对方的数据结构和页面行为，那往往说明边界划分得还不够好。边界拆错也不必推倒重来：可以先在上下文之间加一层防腐层（Anti-Corruption Layer，ACL）把上下游隔离开，等时机成熟再逐步收敛边界、重新归并子应用。
 
 下面这张图可以作为“按技术层拆”和“按业务域拆”的直观对比：
 
@@ -350,16 +366,24 @@ flowchart TB
 落到代码层面，按业务域拆分后，每个子应用往往对应一个独立入口：
 
 ```javascript
+// 示意代码：qiankun 采用 HTML Entry，entry 应指向子应用的 HTML 访问地址，
+// 而不是打包产物 URL；container 必填，注册完成后还要调用 start() 启动
+import { registerMicroApps, start } from 'qiankun';
+
 registerMicroApps([
-  { name: 'user-center', entry: '//cdn.com/user-center/entry.js', activeRule: '/user' },
-  { name: 'product-mgmt', entry: '//cdn.com/product-mgmt/entry.js', activeRule: '/product' },
-  { name: 'order-mgmt', entry: '//cdn.com/order-mgmt/entry.js', activeRule: '/order' },
-  { name: 'marketing', entry: '//cdn.com/marketing/entry.js', activeRule: '/marketing' },
-  { name: 'dashboard', entry: '//cdn.com/dashboard/entry.js', activeRule: '/dashboard' }
+  { name: 'user-center', entry: '//cdn.com/user-center/', container: '#subapp-container', activeRule: '/user' },
+  { name: 'product-mgmt', entry: '//cdn.com/product-mgmt/', container: '#subapp-container', activeRule: '/product' },
+  { name: 'order-mgmt', entry: '//cdn.com/order-mgmt/', container: '#subapp-container', activeRule: '/order' },
+  { name: 'marketing', entry: '//cdn.com/marketing/', container: '#subapp-container', activeRule: '/marketing' },
+  { name: 'dashboard', entry: '//cdn.com/dashboard/', container: '#subapp-container', activeRule: '/dashboard' }
 ]);
+
+start();
 ```
 
 这里的路由前缀 `activeRule`，其实就天然形成了业务子域之间的边界。每个子应用都可以围绕自己的业务路径独立开发、独立发布，而不是继续被一个超级单体项目绑在一起。
+
+顺带说明示例里的几个要点：`entry` 指向子应用的 HTML 地址（即 HTML Entry），qiankun 会拉取 HTML 后自行解析其中的 JS/CSS；子应用还需要导出 `bootstrap`/`mount`/`unmount` 生命周期，注册后调用 `start()`，路由命中时 qiankun 才会把子应用挂载到 `container`。这套机制的细节，第四篇会展开。
 
 ## 小结：先理解原则，再谈工具选型
 
