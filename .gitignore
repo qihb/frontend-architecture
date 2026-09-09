@@ -1,0 +1,41 @@
+# 依赖安装目录（匹配任意层级的 node_modules）
+node_modules/
+
+# 构建产物
+dist/
+dist-ssr/
+coverage/
+*.local
+
+# 包管理器缓存
+.pnpm-store/
+.yarn/
+.lerna/
+
+# 日志
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# 编辑器与 IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 环境变量
+.env
+.env.local
+.env.*.local

@@ -1,0 +1,22 @@
+{
+  "name": "qiankun-production-lab",
+  "private": true,
+  "workspaces": [
+    "shell-app",
+    "legacy-crm-vue2",
+    "approval-react",
+    "customer-widget",
+    "analytics-vue3",
+    "qiankun3-lab/host-app",
+    "qiankun3-lab/esm-app"
+  ],
+  "scripts": {
+    "dev:portal": "concurrently -k -n shell,crm,approval,widget -c cyan,magenta,yellow,green \"npm run dev --workspace shell-app\" \"npm run dev --workspace legacy-crm-vue2\" \"npm run dev --workspace approval-react\" \"npm run dev --workspace customer-widget\"",
+    "dev:analytics": "npm run dev --workspace analytics-vue3",
+    "dev:qiankun3": "concurrently -k -n host,esm -c blue,red \"npm run dev --workspace host-app\" \"npm run dev --workspace esm-app\"",
+    "build": "npm run build --workspace shell-app && npm run build --workspace legacy-crm-vue2 && npm run build --workspace approval-react && npm run build --workspace customer-widget && npm run build --workspace analytics-vue3 && npm run build --workspace host-app && npm run build --workspace esm-app"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

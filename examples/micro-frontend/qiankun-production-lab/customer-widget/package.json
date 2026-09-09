@@ -1,0 +1,12 @@
+{
+  "name": "customer-widget",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "serve -l 7203 --cors public",
+    "build": "echo \"customer-widget is a static classic-script app under public/\""
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

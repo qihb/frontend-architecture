@@ -1,0 +1,17 @@
+{
+  "name": "shell-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 7200",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "qiankun": "^2.10.16"
+  },
+  "devDependencies": {
+    "vite": "^8.2.2"
+  }
+}

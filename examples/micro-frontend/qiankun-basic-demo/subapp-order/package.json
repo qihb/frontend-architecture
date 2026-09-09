@@ -1,0 +1,12 @@
+{
+  "name": "subapp-order",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "serve -l 7102 --cors public",
+    "build": "echo \"subapp-order is a static classic-script app under public/\""
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

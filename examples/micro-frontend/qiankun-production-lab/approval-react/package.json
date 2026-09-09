@@ -1,0 +1,11 @@
+{
+  "name": "approval-react",
+  "private": true,
+  "scripts": {
+    "dev": "serve -l 7202 --cors public",
+    "build": "echo \"approval-react uses static assets in public/\""
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

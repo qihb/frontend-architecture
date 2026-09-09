@@ -1,0 +1,17 @@
+{
+  "name": "host-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 7300",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "qiankun": "^3.0.0-rc.22"
+  },
+  "devDependencies": {
+    "vite": "^8.2.2"
+  }
+}

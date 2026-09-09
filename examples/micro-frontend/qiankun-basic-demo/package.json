@@ -1,0 +1,16 @@
+{
+  "name": "qiankun-basic-demo",
+  "private": true,
+  "workspaces": [
+    "main-app",
+    "subapp-dashboard",
+    "subapp-order"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n host,dashboard,order -c cyan,magenta,yellow \"npm run dev --workspace main-app\" \"npm run dev --workspace subapp-dashboard\" \"npm run dev --workspace subapp-order\"",
+    "build": "npm run build --workspace main-app && npm run build --workspace subapp-dashboard && npm run build --workspace subapp-order"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

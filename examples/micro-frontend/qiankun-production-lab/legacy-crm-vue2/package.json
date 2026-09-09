@@ -1,0 +1,11 @@
+{
+  "name": "legacy-crm-vue2",
+  "private": true,
+  "scripts": {
+    "dev": "serve -l 7201 --cors public",
+    "build": "echo \"legacy-crm-vue2 uses static assets in public/\""
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}
