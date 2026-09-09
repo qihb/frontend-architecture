@@ -1,6 +1,5 @@
 # frontend-architecture
 大前端架构系列文章，涵盖微前端、跨平台开发、可视化拖拽、性能优化、工程化、测试等方面的内容
-A series of articles on frontend architecture
 
 ## 文章目录
 
