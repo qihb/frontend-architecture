@@ -1,3 +1,10 @@
+/*
+ * [subapp-dashboard] 子应用样式，由 index.html 的 <link> 引入（HTML Entry 的样式资源）。
+ * 对应专栏：
+ *   · 【第 4 篇 §5 / §6】子应用样式随 HTML Entry 一起被解析，卸载时由 qiankun 尽量移除。
+ *   · 【第 5 篇 §5.3 样式污染】所有类名统一加 `dashboard-` 前缀，
+ *     这是在未开启运行时隔离时用命名约定兜底的做法。
+ */
 .dashboard-app {
   min-height: 520px;
   padding: 28px;

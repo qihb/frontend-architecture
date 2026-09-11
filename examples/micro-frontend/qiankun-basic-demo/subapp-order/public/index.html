@@ -1,13 +1,23 @@
 <!doctype html>
+<!--
+  [subapp-order] 子应用入口 HTML —— HTML Entry 本体。
+  对应专栏：
+    · 【第 4 篇 §6】主应用 registerMicroApps 的 entry 指向本文件，qiankun 解析其中的 JS/CSS 资源。
+    · 【第 5 篇 §4.3】与 subapp.js 对照阅读，理解「HTML Entry 与 JS Entry 的区别」。
+  <link> / <script> 的绝对路径在子目录部署或跨域加载时需动态修正，否则资源 404（第 5 篇 §5.2）。
+-->
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>order 子应用</title>
+    <!-- 【第 4 篇 §5】子应用样式由本文件声明，是 CSS 沙箱隔离的对象。 -->
     <link rel="stylesheet" href="/subapp.css" />
   </head>
   <body>
+    <!-- 子应用根节点：subapp.js 优先在 props.container 下查找（第 5 篇 §2.1）。 -->
     <div id="order-root"></div>
+    <!-- 【第 4 篇 §6】脚本被解析后进入 JS 沙箱执行，暴露 window['subapp-order']（第 5 篇 §2.2）。 -->
     <script src="/subapp.js"></script>
   </body>
 </html>

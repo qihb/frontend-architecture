@@ -1,13 +1,26 @@
 <!doctype html>
+<!--
+  [subapp-dashboard] 子应用入口 HTML —— 这就是「HTML Entry」本体。
+  对应专栏：
+    · 【第 4 篇 §6】registerMicroApps 里的 entry 指向本文件，qiankun 会 fetch 它并解析出
+      <link>/<style> 等样式资源（交给 CSS 隔离处理）与 <script>（放进 JS 沙箱执行）。
+    · 【第 5 篇 §4.3】建议把本文件与 subapp.js 对照阅读，理解「qiankun 真正拉取并解析的东西」。
+  注意：<link> / <script> 用的是绝对路径（/subapp.css、/subapp.js），
+  部署到子目录或跨域加载时需改由 publicPath / base 动态决定，否则会出现资源 404（第 5 篇 §5.2）。
+-->
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>dashboard 子应用</title>
+    <!-- 【第 4 篇 §5】子应用样式从这份 HTML 声明进来，正是 CSS 沙箱要隔离的对象。 -->
     <link rel="stylesheet" href="/subapp.css" />
   </head>
   <body>
+    <!-- 子应用自己的渲染根节点：subapp.js 会优先在 props.container 下查找它（第 5 篇 §2.1）。 -->
     <div id="dashboard-root"></div>
+    <!-- 【第 4 篇 §6】该脚本会被解析后放进 JS 沙箱执行，
+         执行后暴露 window['subapp-dashboard'] 生命周期（第 5 篇 §2.2）。 -->
     <script src="/subapp.js"></script>
   </body>
 </html>

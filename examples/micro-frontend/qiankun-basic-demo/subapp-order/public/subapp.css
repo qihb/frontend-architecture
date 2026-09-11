@@ -1,3 +1,10 @@
+/*
+ * [subapp-order] 子应用样式，由 index.html 的 <link> 引入（HTML Entry 的样式资源）。
+ * 对应专栏：
+ *   · 【第 4 篇 §5 / §6】样式随 HTML Entry 解析进来，属于 CSS 沙箱的处理范围。
+ *   · 【第 5 篇 §5.3 样式污染】类名统一加 `order-` 前缀，与 dashboard 子应用的 `dashboard-`
+ *     前缀彼此错开，是命名约定层面的防污染。
+ */
 .order-app {
   min-height: 520px;
   padding: 28px;

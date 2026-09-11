@@ -1,3 +1,11 @@
+/*
+ * [main-app] 主应用样式
+ * 对应专栏：
+ *   · 【第 4 篇 §5 CSS 沙箱】本 demo 的 start() 只配了 prefetch，未开启任何样式隔离，
+ *     因此主应用与子应用样式作用在同一个文档里，全靠类名前缀等工程约定避免串台。
+ *   · 【第 5 篇 §5.3 样式污染】这正是「默认隔离只保证子应用之间」的直观体现——
+ *     想彻底隔离需显式开启 strictStyleIsolation / experimentalStyleIsolation（第 4 篇 §5.2、§5.3）。
+ */
 :root {
   color: #1f2937;
   background: #f6f8fb;
