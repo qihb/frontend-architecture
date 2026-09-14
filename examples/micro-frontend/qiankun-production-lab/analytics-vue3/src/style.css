@@ -25,7 +25,7 @@ body {
   padding: 36px 24px 48px;
 }
 
-.analytics-hero {
+.hero {
   display: grid;
   gap: 20px;
   grid-template-columns: minmax(0, 1fr) 340px;
@@ -41,13 +41,14 @@ body {
   text-transform: uppercase;
 }
 
-.analytics-hero h1 {
+.hero h1 {
   margin: 0;
   font-size: 2.4rem;
 }
 
 .analytics-panel,
-.analytics-card {
+.cards article,
+.charts section {
   border: 1px solid #dbe2f0;
   border-radius: 20px;
   background: #fff;
@@ -56,25 +57,39 @@ body {
 }
 
 .analytics-panel h2,
-.analytics-card h2 {
+.charts section h2 {
   margin-top: 0;
 }
 
-.analytics-panel ul {
+.analytics-panel ul,
+.charts ul {
   margin: 12px 0 0;
   padding-left: 18px;
   color: #475569;
 }
 
-.analytics-grid {
+.cards {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+.cards strong {
+  display: block;
+  font-size: 2rem;
+}
+
+.charts {
   display: grid;
   gap: 18px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 @media (max-width: 900px) {
-  .analytics-hero,
-  .analytics-grid {
+  .hero,
+  .cards,
+  .charts {
     grid-template-columns: 1fr;
   }
 }

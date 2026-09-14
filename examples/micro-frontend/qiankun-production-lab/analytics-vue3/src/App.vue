@@ -1,36 +1,72 @@
+<script setup>
+import { computed } from 'vue'
+
+const props = defineProps({
+  microProps: {
+    type: Object,
+    default: () => ({}),
+  },
+})
+
+const cards = computed(() => {
+  return (
+    props.microProps.preloadData?.cards ?? [
+      { label: '线索转化率', value: '36.8%' },
+      { label: '区域 GMV', value: '1260 万' },
+      { label: '渠道新增客户', value: '284' },
+    ]
+  )
+})
+
+const funnel = ['线索池', '有效商机', '报价跟进', '成交']
+const regions = ['华东 42%', '华南 26%', '华北 18%', '其他 14%']
+const channels = ['直营 38%', '经销 34%', '伙伴 28%']
+</script>
+
 <template>
   <section class="analytics-page">
-    <header class="analytics-hero">
+    <header class="hero">
       <div>
-        <p class="analytics-tag">Vue3 + Vite</p>
-        <h1>analytics-vue3</h1>
-        <p>
-          这个项目故意保持独立运行，用来对应文章里“qiankun 2.x 面对现代工程体系时，为什么会出现接入抉择”这一节。
-        </p>
+        <p class="analytics-tag">Vue3 + Vite + qiankun</p>
+        <h1>运营分析中心</h1>
+        <p>现代数据域也纳入统一菜单与权限体系，先消费父应用预取数据，再补充细项分析。</p>
       </div>
       <div class="analytics-panel">
-        <h2>文章建议</h2>
+        <h2>父应用上下文</h2>
         <ul>
-          <li>如果你还在 qiankun 2.x，先评估社区插件方案</li>
-          <li>如果项目允许试验，再看 qiankun 3 的 ESM 路线</li>
-          <li>不要为了“统一方案”强行把所有项目都用同一种接法</li>
+          <li>角色：{{ microProps.role || 'ops_analyst' }}</li>
+          <li>租户：{{ microProps.tenantId || 'tenant-east' }}</li>
+          <li>挂载方式：registerMicroApps 整页编排</li>
         </ul>
       </div>
     </header>
 
-    <section class="analytics-grid">
-      <article class="analytics-card">
-        <h2>现代工程优势</h2>
-        <p>Vite 开发体验更轻，HMR 更直接，适合新项目快速迭代。</p>
+    <div class="cards">
+      <article v-for="card in cards" :key="card.label">
+        <strong>{{ card.value }}</strong>
+        <span>{{ card.label }}</span>
       </article>
-      <article class="analytics-card">
-        <h2>接入代价</h2>
-        <p>在 qiankun 2.x 中，需要额外处理 ESM、资源路径、沙箱兼容等问题。</p>
-      </article>
-      <article class="analytics-card">
-        <h2>推荐定位</h2>
-        <p>在生产上把它作为“待接入候选项目”，而不是直接塞进老系统接入链路。</p>
-      </article>
-    </section>
+    </div>
+
+    <div class="charts">
+      <section>
+        <h2>销售漏斗</h2>
+        <ul>
+          <li v-for="item in funnel" :key="item">{{ item }}</li>
+        </ul>
+      </section>
+      <section>
+        <h2>区域 GMV 分布</h2>
+        <ul>
+          <li v-for="item in regions" :key="item">{{ item }}</li>
+        </ul>
+      </section>
+      <section>
+        <h2>渠道转化趋势</h2>
+        <ul>
+          <li v-for="item in channels" :key="item">{{ item }}</li>
+        </ul>
+      </section>
+    </div>
   </section>
 </template>

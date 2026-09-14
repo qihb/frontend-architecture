@@ -1,0 +1,11 @@
+{
+  "name": "risk-control-widget",
+  "private": true,
+  "scripts": {
+    "dev": "serve -l 7205 --cors public",
+    "build": "echo \"risk-control-widget uses static assets in public/\""
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}
