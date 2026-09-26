@@ -36,12 +36,13 @@
 - [第十三篇：微前端与 Monorepo——如何协同管理大型项目](articles/micro-frontend/13-monorepo-collaboration.md)
 - [第十四篇：微前端落地总结与架构决策](articles/micro-frontend/14-architecture-decision.md)
 
-**番外篇（4 篇）**
+**番外篇（5 篇）**
 
 - [番外篇一：iframe 真的是微前端吗？为什么很多团队最后还是选了它](articles/micro-frontend/extra-01-iframe.md)
 - [番外篇二：从 JS Bundle 到 Single-SPA，微前端运行时方案是怎么演进的](articles/micro-frontend/extra-02-runtime-evolution.md)
 - [番外篇三：Web Components 与服务端组合，为什么它们没有成为主流](articles/micro-frontend/extra-03-web-components-and-server-composition.md)
 - [番外篇四：企业级混合微前端改造实战——老项目、新项目、局部嵌入与 qiankun 3 试验](articles/micro-frontend/extra-04-production-hybrid-micro-frontend.md)
+- [番外篇五：iframe 微前端工程化落地——一条 postMessage 怎么撑起父子协作](articles/micro-frontend/extra-05-iframe-engineering.md)
 
 **配套可运行案例**
 

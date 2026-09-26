@@ -5,7 +5,7 @@
 ## 专栏定位
 
 - **正文（第 1–14 篇）**：从架构演进动机到生产落地全流程，覆盖选型、原理、实战、治理与决策
-- **番外篇（4 篇）**：深入探讨 iframe、运行时方案演进、Web Components、企业级混合改造等专题
+- **番外篇（5 篇）**：深入探讨 iframe、运行时方案演进、Web Components、企业级混合改造等专题
 - **配套案例（2 个）**：可运行的最小示例和生产改造实验室
 
 ## 文章目录
@@ -33,6 +33,7 @@
 - [番外篇二：从 JS Bundle 到 Single-SPA，微前端运行时方案是怎么演进的](extra-02-runtime-evolution.md)
 - [番外篇三：Web Components 与服务端组合，为什么它们没有成为主流](extra-03-web-components-and-server-composition.md)
 - [番外篇四：企业级混合微前端改造实战——老项目、新项目、局部嵌入与 qiankun 3 试验](extra-04-production-hybrid-micro-frontend.md)
+- [番外篇五：iframe 微前端工程化落地——一条 postMessage 怎么撑起父子协作](extra-05-iframe-engineering.md)
 
 ### 配套可运行案例
 
