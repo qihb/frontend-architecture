@@ -1,6 +1,6 @@
 # frontend-architecture
 
-大前端架构系列文章，涵盖微前端、跨平台开发、可视化拖拽、性能优化、工程化、测试、AI 辅助研发等方面的内容。
+大前端架构系列文章，涵盖微前端、跨端开发、可视化拖拽、性能优化、工程化、测试、AI 辅助研发等方面的内容。
 
 ## 专栏导航
 
@@ -8,6 +8,7 @@
 |------|------|--------|------|
 | [微前端架构](#微前端架构--从入门到生产落地) | 从演进动机到方案选型，到 qiankun/Module Federation 实战，到治理与发布 | 14 篇 + 4 篇番外 + 2 个案例 | [专栏导读](articles/micro-frontend/README.md) |
 | [工程化、测试与 AI](#工程化测试与-ai--前端研发效能提升实战) | 构建工具、Monorepo、CI/CD、分层测试体系、AI 辅助编码与审查 | 14 篇 | [专栏导读](articles/engineering-and-testing/README.md) |
+| [跨端开发](#跨端开发--一套代码多端复用) | 跨端动机、底层原理、Flutter/RN/小程序/桌面四大路线、工程实践与趋势 | 12 篇 + 1 篇番外 + 1 个案例 | [专栏导读](articles/cross-platform/README.md) |
 
 > 想找特定主题？用 `Ctrl/⌘ + F` 搜索关键词，或直接浏览下方专栏目录。
 
@@ -75,3 +76,39 @@
 - [第十二篇：AI 辅助测试生成——让 AI 帮你写测试用例](articles/engineering-and-testing/12-ai-test-generation.md)
 - [第十三篇：AI 辅助代码审查——自动化 PR Review 与质量分析](articles/engineering-and-testing/13-ai-code-review.md)
 - [第十四篇：AI 驱动的工程化未来——智能 CI/CD、自动化运维与人机协作](articles/engineering-and-testing/14-ai-driven-engineering.md)
+
+### 跨端开发——一套代码，多端复用
+
+> [专栏导读](articles/cross-platform/README.md) · 12 篇正文 + 1 篇番外 + 1 个配套案例
+
+**认识跨端（2 篇）**
+
+- [第一篇：跨端开发全景——动机、演进与技术路线](articles/cross-platform/01-cross-platform-landscape.md)
+- [第二篇：跨端底层原理——渲染引擎、JS 引擎与桥接通信](articles/cross-platform/02-cross-platform-runtime.md)
+
+**四大技术路线（4 篇）**
+
+- [第三篇：Flutter 深度解析——自绘引擎路线](articles/cross-platform/03-flutter-deep-dive.md)
+- [第四篇：React Native 深度解析——原生渲染 + 桥接路线](articles/cross-platform/04-react-native-deep-dive.md)
+- [第五篇：小程序与跨端框架——编译期转译路线](articles/cross-platform/05-mini-program-cross-platform.md)
+- [第六篇：桌面端开发——Electron 与 Tauri](articles/cross-platform/06-electron-desktop.md)
+
+**跨端工程实践（4 篇）**
+
+- [第七篇：跨端统一抽象层与架构模式](articles/cross-platform/07-cross-platform-abstraction.md)
+- [第八篇：跨端工程化——多端构建、产物管理与动态化](articles/cross-platform/08-cross-platform-engineering.md)
+- [第九篇：跨端性能优化——各端差异与优化策略](articles/cross-platform/09-cross-platform-performance.md)
+- [第十篇：跨端调试与测试——真机调试与多端测试策略](articles/cross-platform/10-cross-platform-debug-test.md)
+
+**适配与展望（2 篇）**
+
+- [第十一篇：跨端 UI 一致性与适配体系](articles/cross-platform/11-cross-platform-ui-consistency.md)
+- [第十二篇：跨端未来趋势与技术选型决策](articles/cross-platform/12-cross-platform-trends.md)
+
+**番外篇（1 篇）**
+
+- [番外篇一：手写一个 JSBridge——把相机、定位等原生能力交给 H5](articles/cross-platform/extra-01-jsbridge.md)
+
+**配套可运行案例**
+
+- [jsbridge-demo（番外篇一配套）](examples/cross-platform/jsbridge-demo/README.md)：H5 + Android/iOS 原生容器，演示用 JSBridge 把相机、定位、扫码等能力开放给 H5
