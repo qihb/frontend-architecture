@@ -9,6 +9,8 @@
 | [微前端架构](#微前端架构--从入门到生产落地) | 从演进动机到方案选型，到 qiankun/Module Federation 实战，到治理与发布 | 14 篇 + 4 篇番外 + 2 个案例 | [专栏导读](articles/micro-frontend/README.md) |
 | [工程化、测试与 AI](#工程化测试与-ai--前端研发效能提升实战) | 构建工具、Monorepo、CI/CD、分层测试体系、AI 辅助编码与审查 | 14 篇 | [专栏导读](articles/engineering-and-testing/README.md) |
 | [跨端开发](#跨端开发--一套代码多端复用) | 跨端动机、底层原理、Flutter/RN/小程序/桌面四大路线、工程实践与趋势 | 12 篇 + 1 篇番外 + 1 个案例 | [专栏导读](articles/cross-platform/README.md) |
+| [性能与体验优化](#性能与体验优化--从度量到ai驱动的优化实战) | 性能与体验的度量方法、Web/移动/桌面分端优化、体验优化与 AI 提效 | 15 篇 + 2 篇番外 | [专栏导读](articles/performance-and-experience/README.md) |
+| [前端可视化拖拽](#前端可视化拖拽--从入门到架构实战) | 拖拽事件原理、库选型、手写实战、画布数学与交互手感、低代码编辑器架构与生产化 | 14 篇 + 4 篇番外（写作中） | [专栏导读](articles/visualization-drag/README.md) |
 
 > 想找特定主题？用 `Ctrl/⌘ + F` 搜索关键词，或直接浏览下方专栏目录。
 
@@ -112,3 +114,88 @@
 **配套可运行案例**
 
 - [jsbridge-demo（番外篇一配套）](examples/cross-platform/jsbridge-demo/README.md)：H5 + Android/iOS 原生容器，演示用 JSBridge 把相机、定位、扫码等能力开放给 H5
+
+### 性能与体验优化——从度量到 AI 驱动的优化实战
+
+> [专栏导读](articles/performance-and-experience/README.md) · 15 篇正文 + 2 篇番外
+
+**方法论与度量（2 篇）**
+
+- [第一篇：性能与体验优化全景图——从指标体系到决策框架](articles/performance-and-experience/01-performance-experience-overview.md)
+- [第二篇：性能度量与监控体系——从实验室数据到真实用户监控（RUM）](articles/performance-and-experience/02-metrics-and-monitoring.md)
+
+**Web 前端性能（4 篇）**
+
+- [第三篇：浏览器渲染性能——渲染流水线与关键渲染路径](articles/performance-and-experience/03-browser-rendering-performance.md)
+- [第四篇：资源加载与网络优化——从请求到缓存的完整链路](articles/performance-and-experience/04-resource-loading-and-network.md)
+- [第五篇：前端运行时性能与内存管理——让 JS 与框架跑得更快](articles/performance-and-experience/05-runtime-performance-and-memory.md)
+- [第六篇：性能工程化——性能预算、Bundle 分析与 CI 门禁](articles/performance-and-experience/06-performance-engineering.md)
+
+**移动端与桌面端（3 篇）**
+
+- [第七篇：移动端 App 性能优化——启动、首屏与帧率](articles/performance-and-experience/07-mobile-app-performance.md)
+- [第八篇：跨端渲染性能调优——React Native 与 Flutter](articles/performance-and-experience/08-cross-platform-rendering-tuning.md)
+- [第九篇：桌面端性能优化——Electron 与 Tauri](articles/performance-and-experience/09-desktop-performance.md)
+
+**体验优化（3 篇）**
+
+- [第十篇：感知性能与加载体验优化——让"快"被用户看见](articles/performance-and-experience/10-perceived-performance-and-loading.md)
+- [第十一篇：交互体验与动画性能——流畅的微交互与无卡顿滚动](articles/performance-and-experience/11-interaction-and-animation-experience.md)
+- [第十二篇：可访问性与体验度量——被忽视的体验维度](articles/performance-and-experience/12-accessibility-and-experience-metrics.md)
+
+**AI 驱动（3 篇）**
+
+- [第十三篇：AI 驱动的性能诊断——让 AI 读懂 profiling 与监控数据](articles/performance-and-experience/13-ai-driven-performance-diagnosis.md)
+- [第十四篇：AI 驱动的性能修复——代码级优化与自动化](articles/performance-and-experience/14-ai-driven-performance-fix.md)
+- [第十五篇：AI 驱动的体验优化与智能化——从走查到个性化](articles/performance-and-experience/15-ai-driven-experience-optimization.md)
+
+**番外篇（2 篇）**
+
+- [番外篇一：性能优化反模式清单](articles/performance-and-experience/extra-01-performance-antipatterns.md)
+- [番外篇二：一次真实线上性能事故的完整复盘](articles/performance-and-experience/extra-02-production-performance-incident.md)
+
+### 前端可视化拖拽——从入门到架构实战
+
+> [专栏导读](articles/visualization-drag/README.md) · 15 篇正文 + 4 篇番外（规划中，各篇核心要点见专栏导读）
+
+**入门篇：场景、原理与库选型（5 篇）**
+
+- [第一篇：为什么每个前端都绕不开拖拽？——应用场景全景与技术地图](articles/visualization-drag/01-drag-landscape.md)
+- [第二篇：拖拽的底层机制——鼠标事件、Pointer Events 与 HTML5 DnD API](articles/visualization-drag/02-drag-events-mechanism.md)
+- [第三篇：主流拖拽库选型——dnd-kit、react-dnd、SortableJS、Interact.js 怎么选](articles/visualization-drag/03-drag-libraries-comparison.md)
+- [第四篇：手写实战（一）——从零实现一个拖拽排序列表](articles/visualization-drag/04-handwritten-sortable-list.md)
+- [第五篇：手写实战（二）——看板与跨容器拖拽](articles/visualization-drag/05-kanban-cross-container.md)
+
+**进阶篇：编辑器手感的三大支柱（4 篇）**
+
+- [第六篇：拖拽中的数学——坐标系、缩放与 Figma 式无限画布](articles/visualization-drag/06-coordinate-systems-and-transforms.md)
+- [第七篇：命中检测与选择体系——点选、框选、多选与层级](articles/visualization-drag/07-hit-testing-and-selection.md)
+- [第八篇：对齐与吸附——参考线算法让编辑器"手感"专业](articles/visualization-drag/08-alignment-and-snapping.md)
+- [第九篇：撤销重做与快捷键——编辑器的"后悔药"](articles/visualization-drag/09-undo-redo-and-shortcuts.md)
+
+**架构篇：可视化搭建平台（3 篇）**
+
+- [第十篇：低代码编辑器架构（上）——画布、物料与 Schema 协议](articles/visualization-drag/10-editor-architecture-schema.md)
+- [第十一篇：低代码编辑器架构（下）——物料体系、渲染引擎与代码生成](articles/visualization-drag/11-materials-rendering-codegen.md)
+- [第十二篇：性能专题——千级节点的画布如何保持 60fps](articles/visualization-drag/12-canvas-performance.md)
+
+**高阶篇：图编辑、表单与生产化（3 篇）**
+
+- [第十三篇：流程图编辑器实战——节点、连线与自动布局](articles/visualization-drag/13-flow-chart-editor.md)
+- [第十四篇：表单设计器实战——字段拖拽、校验配置与联动编排](articles/visualization-drag/14-form-designer.md)
+- [第十五篇：走向生产——协同编辑、插件体系与工程化交付](articles/visualization-drag/15-production-collaboration-plugin.md)
+
+**番外篇（4 篇）**
+
+- [番外篇一：移动端拖拽实战——touch 长按、滚动容器与 H5 拖拽的妥协](articles/visualization-drag/extra-01-mobile-drag.md)
+- [番外篇二：拖拽的可访问性——键盘拖拽与屏幕阅读器](articles/visualization-drag/extra-02-drag-accessibility.md)
+- [番外篇三：AI + 可视化搭建——自然语言生成 Schema、AI 智能布局与 Copilot](articles/visualization-drag/extra-03-ai-and-visual-building.md)
+- [番外篇四：一次拖拽卡顿的生产排查——性能剖析实战案例](articles/visualization-drag/extra-04-drag-performance-investigation.md)
+
+**配套可运行案例（规划中）**
+
+- dnd-list-demo（第四篇配套）：手写拖拽排序列表，演示状态机、占位符与 FLIP 动画
+- kanban-demo（第五篇配套）：多列看板，演示跨容器拖拽、碰撞判定与自动滚动
+- mini-editor（第十、十一篇配套）：迷你低代码编辑器，演示 Schema 协议、缩放画布、属性面板与撤销重做
+- flow-editor（第十三篇配套）：流程图编辑器，演示节点连线、边路由与自动布局
+- form-designer-demo（第十四篇配套）：拖拽式表单设计器，演示字段拖拽、校验规则与联动逻辑配置
