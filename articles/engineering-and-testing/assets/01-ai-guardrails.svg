@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+  <title>AI 产出必须经过工程化护栏的验证</title>
+  <defs>
+    <marker id="arrT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#2DD4BF"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#F87171"/>
+    </marker>
+  </defs>
+
+  <!-- 背景卡片 -->
+  <rect x="0" y="0" width="1200" height="675" rx="24" fill="#0D1B2A" stroke="#1E3A5F" stroke-width="2"/>
+  <circle cx="640" cy="110" r="2.5" fill="#1E3A5F"/><circle cx="1140" cy="480" r="2.5" fill="#1E3A5F"/>
+  <circle cx="70" cy="600" r="2" fill="#1E3A5F"/><circle cx="380" cy="100" r="2" fill="#1E3A5F"/>
+
+  <!-- 顶部标语 -->
+  <rect x="830" y="40" width="310" height="44" rx="22" fill="#13263B" stroke="#A78BFA" stroke-opacity="0.7"/>
+  <text x="985" y="68" text-anchor="middle" font-size="21" fill="#C4B5FD">AI 是油门，工程化是护栏</text>
+
+  <!-- AI 机器人 -->
+  <rect x="130" y="128" width="10" height="24" rx="4" fill="#13263B" stroke="#2DD4BF" stroke-width="2"/>
+  <rect x="220" y="128" width="10" height="24" rx="4" fill="#13263B" stroke="#2DD4BF" stroke-width="2"/>
+  <line x1="180" y1="112" x2="180" y2="94" stroke="#2DD4BF" stroke-width="2.5"/>
+  <circle cx="180" cy="88" r="6" fill="#A78BFA"/>
+  <rect x="140" y="112" width="80" height="64" rx="16" fill="#13263B" stroke="#2DD4BF" stroke-width="2.5"/>
+  <circle cx="164" cy="144" r="8" fill="#2DD4BF"/>
+  <circle cx="196" cy="144" r="8" fill="#2DD4BF"/>
+  <line x1="166" y1="162" x2="194" y2="162" stroke="#2DD4BF" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- 代码屏幕 -->
+  <rect x="80" y="200" width="200" height="140" rx="12" fill="#13263B" stroke="#3B5A7A" stroke-width="2"/>
+  <rect x="96" y="220" width="70" height="9" rx="4" fill="#38BDF8"/>
+  <rect x="96" y="238" width="110" height="9" rx="4" fill="#A78BFA"/>
+  <rect x="96" y="256" width="52" height="9" rx="4" fill="#2DD4BF"/>
+  <rect x="96" y="274" width="96" height="9" rx="4" fill="#FB923C"/>
+  <rect x="96" y="292" width="80" height="9" rx="4" fill="#64748B"/>
+  <rect x="96" y="310" width="60" height="9" rx="4" fill="#4ADE80"/>
+
+  <!-- AI 标签 -->
+  <rect x="65" y="366" width="230" height="36" rx="18" fill="#241436" stroke="#A78BFA" stroke-opacity="0.6"/>
+  <text x="180" y="390" text-anchor="middle" font-size="17" fill="#C4B5FD">AI 生成代码 · 速度 ×10</text>
+
+  <!-- 主流程箭头 -->
+  <line x1="284" y1="270" x2="328" y2="270" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#arrT)"/>
+
+  <!-- 门禁 1：规范 -->
+  <rect x="336" y="220" width="128" height="104" rx="14" fill="#13263B" stroke="#38BDF8" stroke-width="2"/>
+  <text x="400" y="270" text-anchor="middle" font-size="28" font-weight="700" fill="#38BDF8" font-family="SFMono-Regular, Menlo, monospace">{ }</text>
+  <text x="400" y="308" text-anchor="middle" font-size="19" fill="#E2E8F0">规范</text>
+  <circle cx="452" cy="214" r="11" fill="#052E16" stroke="#4ADE80" stroke-width="2"/>
+  <path d="M446 214 l4 4 l8 -8" fill="none" stroke="#4ADE80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="330" y="344" width="140" height="30" rx="15" fill="#13263B" stroke="#1E3A5F" stroke-width="1.5"/>
+  <text x="400" y="364" text-anchor="middle" font-size="14" fill="#94A3B8">ESLint · Prettier</text>
+
+  <line x1="468" y1="272" x2="502" y2="272" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#arrT)"/>
+
+  <!-- 门禁 2：门禁 -->
+  <rect x="506" y="220" width="128" height="104" rx="14" fill="#13263B" stroke="#4ADE80" stroke-width="2"/>
+  <path d="M570 240 L586 246 L586 258 C586 270 579 276 570 281 C561 276 554 270 554 258 L554 246 Z" fill="none" stroke="#4ADE80" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M562 258 l6 6 l12 -12" fill="none" stroke="#4ADE80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="570" y="308" text-anchor="middle" font-size="19" fill="#E2E8F0">门禁</text>
+  <circle cx="622" cy="214" r="11" fill="#052E16" stroke="#4ADE80" stroke-width="2"/>
+  <path d="M616 214 l4 4 l8 -8" fill="none" stroke="#4ADE80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="500" y="344" width="140" height="30" rx="15" fill="#13263B" stroke="#1E3A5F" stroke-width="1.5"/>
+  <text x="570" y="364" text-anchor="middle" font-size="14" fill="#94A3B8">CI 自动校验</text>
+
+  <line x1="638" y1="272" x2="672" y2="272" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#arrT)"/>
+
+  <!-- 门禁 3：测试 -->
+  <rect x="676" y="220" width="128" height="104" rx="14" fill="#13263B" stroke="#FB923C" stroke-width="2"/>
+  <path d="M736 240 h12 v12 l12 24 q3 9 -8 9 h-20 q-11 0 -8 -9 l12 -24 z" fill="none" stroke="#FB923C" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="738" cy="272" r="3" fill="#FB923C"/>
+  <circle cx="748" cy="264" r="2.5" fill="#FB923C"/>
+  <text x="740" y="308" text-anchor="middle" font-size="19" fill="#E2E8F0">测试</text>
+  <circle cx="792" cy="214" r="11" fill="#052E16" stroke="#4ADE80" stroke-width="2"/>
+  <path d="M786 214 l4 4 l8 -8" fill="none" stroke="#4ADE80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="670" y="344" width="140" height="30" rx="15" fill="#13263B" stroke="#1E3A5F" stroke-width="1.5"/>
+  <text x="740" y="364" text-anchor="middle" font-size="14" fill="#94A3B8">单测 · E2E</text>
+
+  <line x1="808" y1="272" x2="852" y2="272" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#arrT)"/>
+
+  <!-- 人审节点 -->
+  <rect x="856" y="220" width="104" height="104" rx="14" fill="#13263B" stroke="#2DD4BF" stroke-width="2"/>
+  <circle cx="908" cy="254" r="11" fill="none" stroke="#2DD4BF" stroke-width="2.5"/>
+  <path d="M890 292 q18 -20 36 0" fill="none" stroke="#2DD4BF" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="908" y="312" text-anchor="middle" font-size="19" fill="#E2E8F0">人审</text>
+  <rect x="846" y="344" width="124" height="30" rx="15" fill="#13263B" stroke="#1E3A5F" stroke-width="1.5"/>
+  <text x="908" y="364" text-anchor="middle" font-size="14" fill="#94A3B8">关键逻辑把关</text>
+
+  <line x1="964" y1="272" x2="998" y2="272" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#arrT)"/>
+
+  <!-- 上线节点 -->
+  <rect x="1002" y="220" width="104" height="104" rx="14" fill="#13263B" stroke="#4ADE80" stroke-width="2"/>
+  <ellipse cx="1054" cy="256" rx="9" ry="14" fill="none" stroke="#4ADE80" stroke-width="3"/>
+  <circle cx="1054" cy="250" r="3.5" fill="none" stroke="#4ADE80" stroke-width="2.5"/>
+  <path d="M1045 265 L1039 276 L1048 271 Z" fill="#4ADE80" opacity="0.8"/>
+  <path d="M1063 265 L1069 276 L1060 271 Z" fill="#4ADE80" opacity="0.8"/>
+  <text x="1054" y="312" text-anchor="middle" font-size="19" fill="#E2E8F0">上线</text>
+  <rect x="992" y="344" width="124" height="30" rx="15" fill="#13263B" stroke="#1E3A5F" stroke-width="1.5"/>
+  <text x="1054" y="364" text-anchor="middle" font-size="14" fill="#94A3B8">灰度 · 全量</text>
+
+  <!-- 底部：绕过护栏的反面路径 -->
+  <path d="M180 402 L180 500 Q180 516 196 516 L584 516" fill="none" stroke="#F87171" stroke-width="2.5" stroke-dasharray="7 6" opacity="0.85" marker-end="url(#arrR)"/>
+  <circle cx="622" cy="516" r="22" fill="#2A1520" stroke="#F87171" stroke-width="2.5"/>
+  <line x1="613" y1="507" x2="631" y2="525" stroke="#F87171" stroke-width="4" stroke-linecap="round"/>
+  <line x1="631" y1="507" x2="613" y2="525" stroke="#F87171" stroke-width="4" stroke-linecap="round"/>
+  <rect x="668" y="497" width="360" height="38" rx="19" fill="#2A1520" stroke="#F87171" stroke-opacity="0.5"/>
+  <text x="848" y="522" text-anchor="middle" font-size="18" fill="#FCA5A5">绕过护栏 = 把未经检验的风险直接带到线上</text>
+
+  <!-- 底部说明 -->
+  <text x="600" y="634" text-anchor="middle" font-size="15" fill="#64748B">AI 负责加速生成，规范、门禁与测试负责自动验收，人只审关键逻辑</text>
+</svg>

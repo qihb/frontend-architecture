@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+  <title>一次提交的现代发布时间线：从分支 CI 到全量上线</title>
+  <defs>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#5EEAD4"/>
+    </marker>
+  </defs>
+
+  <!-- 背景卡片 -->
+  <rect x="0" y="0" width="1200" height="675" rx="24" fill="#0D1B2A" stroke="#1E3A5F" stroke-width="2"/>
+  <circle cx="90" cy="110" r="2.5" fill="#1E3A5F"/><circle cx="1110" cy="90" r="2.5" fill="#1E3A5F"/>
+  <circle cx="160" cy="600" r="2" fill="#1E3A5F"/><circle cx="1040" cy="612" r="2" fill="#1E3A5F"/>
+  <circle cx="620" cy="80" r="2" fill="#1E3A5F"/>
+
+  <!-- 顶部标题 -->
+  <rect x="440" y="36" width="320" height="44" rx="22" fill="#13263B" stroke="#2DD4BF" stroke-opacity="0.6"/>
+  <text x="600" y="64" text-anchor="middle" font-size="21" fill="#5EEAD4">一次提交的发布时间线</text>
+
+  <!-- 图例 -->
+  <rect x="356" y="106" width="220" height="30" rx="15" fill="#13263B" stroke="#1E3A5F"/>
+  <circle cx="382" cy="121" r="7" fill="none" stroke="#4ADE80" stroke-width="2" stroke-dasharray="3 3"/>
+  <text x="398" y="126" font-size="14" fill="#94A3B8">人工触点（仅 2 处）</text>
+  <circle cx="536" cy="121" r="6" fill="#2DD4BF"/>
+  <text x="550" y="126" font-size="14" fill="#94A3B8">自动环节</text>
+
+  <!-- 主时间轴 -->
+  <line x1="60" y1="340" x2="1140" y2="340" stroke="#1E3A5F" stroke-width="3"/>
+  <line x1="1118" y1="340" x2="1142" y2="340" stroke="#5EEAD4" stroke-width="2.5" marker-end="url(#arrG)"/>
+  <text x="60" y="322" font-size="14" fill="#64748B">时间</text>
+
+  <!-- 节点 1：git push（人工） -->
+  <circle cx="110" cy="340" r="15" fill="none" stroke="#2DD4BF" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.8"/>
+  <circle cx="110" cy="340" r="9" fill="#13263B" stroke="#2DD4BF" stroke-width="2.5"/>
+  <line x1="110" y1="325" x2="110" y2="302" stroke="#2DD4BF" stroke-width="1.5" opacity="0.6"/>
+  <text x="110" y="243" text-anchor="middle" font-size="15" fill="#2DD4BF" font-family="SFMono-Regular, Menlo, monospace">T+0s</text>
+  <text x="110" y="270" text-anchor="middle" font-size="18" fill="#E2E8F0">git push</text>
+  <text x="110" y="294" text-anchor="middle" font-size="13" fill="#94A3B8">人工动作 ① 写完代码</text>
+
+  <!-- 节点 2：分支 CI 通过（含质量度量） -->
+  <circle cx="275" cy="340" r="9" fill="#13263B" stroke="#38BDF8" stroke-width="2.5"/>
+  <line x1="275" y1="350" x2="275" y2="378" stroke="#38BDF8" stroke-width="1.5" opacity="0.6"/>
+  <text x="275" y="404" text-anchor="middle" font-size="15" fill="#38BDF8" font-family="SFMono-Regular, Menlo, monospace">T+2 min</text>
+  <text x="275" y="431" text-anchor="middle" font-size="18" fill="#E2E8F0">分支 CI 通过</text>
+  <text x="275" y="455" text-anchor="middle" font-size="13" fill="#94A3B8">Lint · 类型 · 单测 · 构建<tspan x="275" dy="18">覆盖率 · 重复率 · 依赖环</tspan></text>
+
+  <!-- 节点 3：Preview 环境就绪 -->
+  <circle cx="440" cy="340" r="9" fill="#13263B" stroke="#A78BFA" stroke-width="2.5"/>
+  <line x1="440" y1="325" x2="440" y2="302" stroke="#A78BFA" stroke-width="1.5" opacity="0.6"/>
+  <text x="440" y="243" text-anchor="middle" font-size="15" fill="#A78BFA" font-family="SFMono-Regular, Menlo, monospace">T+3 min</text>
+  <text x="440" y="270" text-anchor="middle" font-size="18" fill="#E2E8F0">Preview 环境就绪</text>
+  <text x="440" y="294" text-anchor="middle" font-size="13" fill="#94A3B8">机器人评论附上预览链接</text>
+
+  <!-- 节点 4：评审合并（人工） -->
+  <circle cx="605" cy="340" r="15" fill="none" stroke="#4ADE80" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.8"/>
+  <circle cx="605" cy="340" r="9" fill="#13263B" stroke="#4ADE80" stroke-width="2.5"/>
+  <line x1="605" y1="350" x2="605" y2="378" stroke="#4ADE80" stroke-width="1.5" opacity="0.6"/>
+  <text x="605" y="404" text-anchor="middle" font-size="15" fill="#4ADE80" font-family="SFMono-Regular, Menlo, monospace">T+1 h</text>
+  <text x="605" y="431" text-anchor="middle" font-size="18" fill="#E2E8F0">评审通过 · 合并</text>
+  <text x="605" y="455" text-anchor="middle" font-size="13" fill="#94A3B8">人工动作 ② 点下合并按钮</text>
+
+  <!-- 节点 5：CD 构建发布产物 -->
+  <circle cx="770" cy="340" r="9" fill="#13263B" stroke="#FB923C" stroke-width="2.5"/>
+  <line x1="770" y1="325" x2="770" y2="302" stroke="#FB923C" stroke-width="1.5" opacity="0.6"/>
+  <text x="770" y="243" text-anchor="middle" font-size="15" fill="#FB923C" font-family="SFMono-Regular, Menlo, monospace">T+72 min</text>
+  <text x="770" y="270" text-anchor="middle" font-size="18" fill="#E2E8F0">构建发布产物</text>
+  <text x="770" y="294" text-anchor="middle" font-size="13" fill="#94A3B8">远程缓存命中 · 产物体检</text>
+
+  <!-- 节点 6：灰度 5% -->
+  <circle cx="935" cy="340" r="9" fill="#13263B" stroke="#F472B6" stroke-width="2.5"/>
+  <line x1="935" y1="350" x2="935" y2="378" stroke="#F472B6" stroke-width="1.5" opacity="0.6"/>
+  <text x="935" y="404" text-anchor="middle" font-size="15" fill="#F472B6" font-family="SFMono-Regular, Menlo, monospace">T+74 min</text>
+  <text x="935" y="431" text-anchor="middle" font-size="18" fill="#E2E8F0">灰度 5% 流量</text>
+  <text x="935" y="455" text-anchor="middle" font-size="13" fill="#94A3B8">监控大盘盯着错误率曲线</text>
+
+  <!-- 节点 7：全量上线 -->
+  <circle cx="1100" cy="340" r="16" fill="none" stroke="#4ADE80" stroke-width="1.5" opacity="0.3"/>
+  <circle cx="1100" cy="340" r="9" fill="#13263B" stroke="#4ADE80" stroke-width="2.5"/>
+  <line x1="1100" y1="325" x2="1100" y2="302" stroke="#4ADE80" stroke-width="1.5" opacity="0.6"/>
+  <text x="1100" y="243" text-anchor="middle" font-size="15" fill="#4ADE80" font-family="SFMono-Regular, Menlo, monospace">T+84 min</text>
+  <text x="1100" y="270" text-anchor="middle" font-size="18" fill="#E2E8F0">全量上线</text>
+  <text x="1100" y="294" text-anchor="middle" font-size="13" fill="#94A3B8">全程零人工操作</text>
+
+  <!-- 中部总结带 -->
+  <rect x="330" y="520" width="540" height="40" rx="20" fill="#13263B" stroke="#2DD4BF" stroke-opacity="0.5"/>
+  <text x="600" y="546" text-anchor="middle" font-size="17" fill="#5EEAD4">人：2 次动作 · 机器：其余全部环节</text>
+
+  <!-- 底部说明 -->
+  <text x="600" y="620" text-anchor="middle" font-size="15" fill="#64748B">流水线自身耗时不到 25 分钟，大头是评审等待——缩短人工等待同样是流水线优化的方向</text>
+  <text x="600" y="644" text-anchor="middle" font-size="14" fill="#475569">T+72 min 起为合并后的自动接力：构建 → 灰度 → 全量</text>
+</svg>
