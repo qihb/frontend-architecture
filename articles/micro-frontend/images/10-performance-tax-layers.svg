@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 344" width="800" height="344" role="img" aria-label="微前端性能税的三层结构：加载层、资源层、运行时层">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="24" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#2C2C2A">微前端性能税的三层结构</text>
+
+  <!-- 第一层：加载层 -->
+  <rect x="40" y="40" width="160" height="68" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+  <text x="120" y="74" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#0C447C">① 加载层</text>
+  <rect x="240" y="40" width="520" height="68" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+  <text x="264" y="58" text-anchor="start" dominant-baseline="central" font-size="12" fill="#0C447C">
+    <tspan x="264" dy="0">来源：主子应用串行加载，壳没起来就不知道该加载谁</tspan>
+    <tspan x="264" dy="16" font-size="11" fill="#185FA5">表现：首次进入子应用的等待，明显长于单体应用</tspan>
+    <tspan x="264" dy="16" font-size="11" fill="#185FA5">对策：预加载预热 · entry 缓存 · 壳应用瘦身 · 关键资源内联</tspan>
+  </text>
+
+  <!-- 第二层：资源层 -->
+  <rect x="40" y="148" width="160" height="68" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+  <text x="120" y="182" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#3C3489">② 资源层</text>
+  <rect x="240" y="148" width="520" height="68" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+  <text x="264" y="166" text-anchor="start" dominant-baseline="central" font-size="12" fill="#3C3489">
+    <tspan x="264" dy="0">来源：公共依赖、字体图标、同名接口在各应用各来一份</tspan>
+    <tspan x="264" dy="16" font-size="11" fill="#534AB7">表现：首屏带宽被重复资源挤占，弱网环境更明显</tspan>
+    <tspan x="264" dy="16" font-size="11" fill="#534AB7">对策：externals / shared 单例 · 统一加载 · 请求 in-flight 去重</tspan>
+  </text>
+
+  <!-- 第三层：运行时层 -->
+  <rect x="40" y="256" width="160" height="68" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+  <text x="120" y="290" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#085041">③ 运行时层</text>
+  <rect x="240" y="256" width="520" height="68" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+  <text x="264" y="274" text-anchor="start" dominant-baseline="central" font-size="12" fill="#085041">
+    <tspan x="264" dy="0">来源：Proxy 沙箱属性拦截、生命周期装卸、保活常驻</tspan>
+    <tspan x="264" dy="16" font-size="11" fill="#0F6E56">表现：切换偶有卡顿，长时间使用内存持续爬升</tspan>
+    <tspan x="264" dy="16" font-size="11" fill="#0F6E56">对策：沙箱选型 · 按需激活 · 保活与重建的取舍</tspan>
+  </text>
+</svg>

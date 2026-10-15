@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- 标题 -->
+  <text x="400" y="26" font-size="14" font-weight="600" fill="#2C2C2A" text-anchor="middle" dominant-baseline="central">前端构建工具四个时代（2012–2026）</text>
+
+  <!-- 第一行：Webpack 时代 -->
+  <rect x="40" y="48" width="720" height="44" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+  <text x="56" y="70" font-size="12" fill="#0C447C" text-anchor="start" dominant-baseline="central">① Webpack 时代 · JavaScript 全量打包，「一切皆模块」</text>
+  <text x="744" y="70" font-size="11" fill="#185FA5" text-anchor="end" dominant-baseline="central">2012 – 2020</text>
+
+  <!-- 第二行：原生编译登场 -->
+  <rect x="40" y="132" width="720" height="44" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+  <text x="56" y="154" font-size="12" fill="#0C447C" text-anchor="start" dominant-baseline="central">② 原生编译登场 · esbuild（Go）/ SWC（Rust）证明原生速度的价值</text>
+  <text x="744" y="154" font-size="11" fill="#185FA5" text-anchor="end" dominant-baseline="central">2020 – 2021</text>
+
+  <!-- 第三行：Vite 时代 -->
+  <rect x="40" y="216" width="720" height="44" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+  <text x="56" y="238" font-size="12" fill="#0C447C" text-anchor="start" dominant-baseline="central">③ Vite 时代 · unbundled dev 秒开，双引擎 esbuild + Rollup</text>
+  <text x="744" y="238" font-size="11" fill="#185FA5" text-anchor="end" dominant-baseline="central">2020 – 2026</text>
+
+  <!-- 第四行：Rust 默认化（紫色转折） -->
+  <rect x="40" y="300" width="720" height="56" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+  <text x="56" y="322" font-size="12" font-weight="600" fill="#3C3489" text-anchor="start" dominant-baseline="central">④ Rust 默认化 · 三大方案不约而同换上 Rust 引擎</text>
+  <text x="56" y="338" font-size="11" fill="#534AB7" text-anchor="start" dominant-baseline="central">2025.10 Turbopack 成 Next.js 默认 · 2026.03 Vite 8 集成 Rolldown · 2026.04 Rspack 2.0</text>
+  <text x="744" y="322" font-size="11" fill="#534AB7" text-anchor="end" dominant-baseline="central">2025 – 2026</text>
+
+  <!-- 结论条 -->
+  <rect x="40" y="396" width="720" height="44" rx="10" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1"/>
+  <text x="400" y="418" font-size="12" fill="#2C2C2A" text-anchor="middle" dominant-baseline="central">瓶颈四次转移：JS 运行时 → 原生二进制 → 开发体验 → 整条管线 Rust 化</text>
+</svg>

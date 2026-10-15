@@ -33,7 +33,7 @@
 - [第七篇：无界与 micro-app——微前端框架的新选择](articles/micro-frontend/07-wujie-and-micro-app.md)
 - [第八篇：微前端通信机制全攻略](articles/micro-frontend/08-communication.md)
 - [第九篇：样式隔离与资源管理](articles/micro-frontend/09-style-isolation-and-resource-management.md)
-- 第十篇：微前端性能优化实战（未完成）
+- [第十篇：微前端性能优化实战](articles/micro-frontend/10-performance-optimization.md)
 - 第十一篇：微前端治理与发布体系——从接入规范到灰度回滚（未完成）
 - 第十二篇：微前端测试与联调策略——主子应用如何稳定协作（未完成）
 - 第十三篇：微前端与 Monorepo——如何协同管理大型项目（未完成）

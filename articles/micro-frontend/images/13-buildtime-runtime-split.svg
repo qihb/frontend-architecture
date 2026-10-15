@@ -1,0 +1,65 @@
+<svg viewBox="0 0 800 500" width="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- 总标题 -->
+  <text x="400" y="30" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#2C2C2A">一次提交的两个主场：构建期共享，运行期隔离</text>
+
+  <!-- 构建期分区（容器用灰，内部元素分色） -->
+  <rect x="40" y="52" width="720" height="276" rx="10" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="64" y="76" text-anchor="start" dominant-baseline="central" font-size="14" font-weight="500" fill="#2C2C2A">构建期 —— Monorepo 的主场：共享</text>
+
+  <!-- 共享包（紫） -->
+  <rect x="64" y="96" width="180" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="154" y="112" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#3C3489">runtime-sdk</text>
+  <text x="154" y="134" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534AB7">通信协议层</text>
+
+  <rect x="64" y="192" width="180" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="154" y="208" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#3C3489">shared-components</text>
+  <text x="154" y="230" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534AB7">公共业务组件</text>
+
+  <!-- 应用（琥珀） -->
+  <rect x="310" y="96" width="170" height="44" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="395" y="118" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#633806">apps/main · 主应用基座</text>
+
+  <rect x="310" y="180" width="170" height="44" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="395" y="202" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#633806">apps/dashboard</text>
+
+  <rect x="310" y="264" width="170" height="44" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="395" y="286" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#633806">apps/order</text>
+
+  <!-- 共享包打进产物（虚线） -->
+  <path d="M244 124 L310 118" fill="none" stroke="#5F5E5A" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <path d="M244 124 L310 202" fill="none" stroke="#5F5E5A" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <path d="M244 220 L310 286" fill="none" stroke="#5F5E5A" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text x="277" y="104" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#5F5E5A">打进产物</text>
+
+  <!-- 构建期到运行期：独立部署 -->
+  <path d="M400 328 L400 366" fill="none" stroke="#5F5E5A" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="412" y="348" text-anchor="start" dominant-baseline="central" font-size="11" fill="#5F5E5A">独立构建 · 独立部署：每个 app 产物即部署单元</text>
+
+  <!-- 运行期分区 -->
+  <rect x="40" y="368" width="720" height="112" rx="10" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="64" y="390" text-anchor="start" dominant-baseline="central" font-size="14" font-weight="500" fill="#2C2C2A">运行期 —— 微前端的主场：隔离与编排</text>
+
+  <!-- 站点（绿） -->
+  <rect x="80" y="406" width="180" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="170" y="424" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#085041">main 产物</text>
+  <text x="170" y="446" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">基座站点 app.example.com</text>
+
+  <rect x="300" y="406" width="180" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="390" y="424" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#085041">dashboard 产物</text>
+  <text x="390" y="446" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">dashboard.example.com</text>
+
+  <rect x="520" y="406" width="180" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="610" y="424" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#085041">order 产物</text>
+  <text x="610" y="446" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">order.example.com</text>
+
+  <!-- 基座编排子应用 -->
+  <path d="M262 434 L296 434" fill="none" stroke="#0F6E56" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="280" y="452" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">注册 / 联邦</text>
+  <path d="M170 462 L170 470 L610 470 L610 464" fill="none" stroke="#0F6E56" stroke-width="1" marker-end="url(#arrow)"/>
+</svg>
