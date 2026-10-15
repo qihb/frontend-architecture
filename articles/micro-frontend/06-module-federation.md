@@ -120,7 +120,7 @@ new ModuleFederationPlugin({
 const { default: PayButton } = await import('checkout/PayButton');
 ```
 
-两个细节：`checkout/PayButton` 两段对应 `remotes` 的引用名和 `exposes` 的键，对不上会报「module does not exist in the container」；**消费方也要配置 `shared`**——共享是双方注册、协商取胜，只配一方时另一方只能自带副本。
+两个细节：`checkout/PayButton` 两段对应 `remotes` 的引用名和 `exposes` 的键，对不上会报「module does not exist in the container」；**推荐消费方和提供方都显式声明 `shared`**，这样版本协商、singleton 和 requiredVersion 的意图更清楚。是否能复用某个依赖还取决于双方实际注册的版本与运行时协商结果，并不是“只配置一方就必然只能自带副本”。
 
 ### 2.4 remoteEntry.js：模块清单，不是完整应用
 
@@ -319,7 +319,9 @@ export default function PayButton({ amount }) {
 
 应用保持普通 React 形态即可，唯一要求是入口用 3.4 的 bootstrap 模式。
 
-### 6.2 host：React.lazy + Suspense 消费
+### 6.2 host：React.lazy + Suspense 消费（代码片段）
+
+下面只展示消费侧片段；完整可运行项目还需要补齐双方的 webpack/Vite 配置、入口 bootstrap、远程地址和跨域静态资源服务。
 
 ```jsx
 // mall-host/src/pages/OrderPage.jsx

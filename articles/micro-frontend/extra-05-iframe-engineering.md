@@ -142,13 +142,20 @@ export interface Envelope<T = unknown> {
 
 ```ts
 export class Transport {
-  constructor(private target: Window, private targetOrigin: string, private allowedOrigins: string[]) {}
+  constructor(
+    private target: Window,
+    private targetOrigin: string,
+    private allowedOrigins: string[],
+  ) {}
 
   listen(handler: (env: Envelope) => void) {
     window.addEventListener('message', (event) => {
       if (!this.allowedOrigins.includes(event.origin)) return; // 拒收陌生来源
+      if (event.source !== this.target) return;                // 拒收同源的其他窗口伪造消息
       const env = event.data as Envelope;
-      if (!env || env.v !== PROTOCOL_VERSION) return;           // 版本不符丢弃
+      if (!env || typeof env !== 'object' || env.v !== PROTOCOL_VERSION) return;
+      if (!['request', 'response', 'event'].includes(env.kind)) return;
+      if (typeof env.id !== 'string' || typeof env.channel !== 'string') return;
       handler(env);
     });
   }
@@ -213,6 +220,8 @@ export class Rpc {
   };
 }
 ```
+
+> 上面的 `Transport` 与 `Rpc` 是最小骨架。生产实现还应补充消息 schema 运行时校验、页面销毁时批量 reject、取消请求、重复响应保护，以及 `targetOrigin` 与实际部署域名的配置校验。
 
 ### 4.4 应用层：强类型 API
 

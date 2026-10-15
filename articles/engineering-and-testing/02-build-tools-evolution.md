@@ -251,3 +251,5 @@ flowchart TD
 - **迁移是笔账**：收益 = 时间节省 × 频率 − 迁移成本 − 风险成本，三步法（测量 → 评估兼容面 → 对照验证）让每个数字有出处
 
 工具选好了，下一个问题是：团队里第 N 个新项目从哪来？如果每个项目都靠"拷一个老项目改改名"，规范和构建配置会迅速飘移。下一篇《脚手架与项目模板——标准化研发的起点》讲清楚：模板仓库、CLI 生成器、平台化创建向导三个层次怎么搭，模板如何治理才不会腐化，以及 AI 时代"模板即规范"的新玩法。
+
+> 核验来源（访问日期：2026-10-15）：[Vite 8 官方公告](https://vite.dev/blog/announcing-vite8)、[Cloudflare 收购 VoidZero 公告](https://www.cloudflare.com/en-ca/press/press-releases/2026/cloudflare-acquires-voidzero-to-build-the-future-of-the-ai-native-web/)。文中的性能数字仅代表公告或特定基准项目，不应直接外推到所有工程。

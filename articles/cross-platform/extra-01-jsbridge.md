@@ -49,7 +49,7 @@ WebView 容器里，能用的通信通道其实只有「两个半」：
 | H5 → Native | 对象注入 | `addJavascriptInterface` | `WKScriptMessageHandler` |
 | Native → H5 | 执行 JS 代码 | `evaluateJavascript` | `evaluateJavaScript` |
 
-之所以说「两个半」，是因为 Native → H5 只有「执行 JS」这一种手段，而且它只能是「原生主动往页面里塞一段代码」，所以从 H5 视角看它是「被动的」。
+之所以说「两个半」，是因为在本文的兼容性骨架里，Native → H5 主要通过执行 JS 完成，而且它只能是「原生主动往页面里塞一段代码」，所以从 H5 视角看它是「被动的」。这只是教学比喻，不是 WebView 的唯一通信模型；Android WebMessage/WebMessagePort、iOS 的 `WKScriptMessageHandler` 等平台通道应按目标系统单独评估。
 
 **H5 → Native 的第一种：URL Scheme 拦截。** H5 触发一个自定义协议跳转，比如 `myapp://openCamera`，原生在容器层拦下这个跳转，解析出协议名和参数，再决定干什么。之所以常用「隐藏 iframe」来触发而不是 `location.href`，是因为 iframe 不会让页面整体跳转、不会打断当前页面状态：
 
@@ -119,12 +119,19 @@ controller.add(self, name: "nativeBridge")
 
 ```java
 // Android
-webView.evaluateJavascript("window._handleMessageFromNative('" + json + "')", null);
+JSONObject payload = new JSONObject(json);
+webView.evaluateJavascript(
+    "window._handleMessageFromNative(" + payload.toString() + ")", null);
 ```
 
 ```swift
 // iOS
-webView.evaluateJavaScript("window._handleMessageFromNative('\(json)')", completionHandler: nil)
+let payload = try JSONSerialization.jsonObject(
+  with: Data(json.utf8), options: [])
+let data = try JSONSerialization.data(withJSONObject: payload)
+let safeJson = String(data: data, encoding: .utf8)!
+webView.evaluateJavaScript(
+  "window._handleMessageFromNative(\(safeJson))", completionHandler: nil)
 ```
 
 ### 2.2 一次「带回调」的调用是怎么配对的
@@ -311,7 +318,9 @@ private void respond(String id, JSONObject result) {
       resp.put("type", "response");
       resp.put("id", id);
       resp.put("result", result);
-      webView.evaluateJavascript("window._handleMessageFromNative(" + resp + ")", null);
+  // JSONObject 负责转义 id/result 中的引号和换行；
+  // 不要把未经 JSON 序列化的业务字符串直接拼进 JavaScript。
+  webView.evaluateJavascript("window._handleMessageFromNative(" + resp.toString() + ")", null);
     } catch (JSONException e) { e.printStackTrace(); }
   });
 }
@@ -362,8 +371,10 @@ class WebViewController: UIViewController, WKScriptMessageHandler {
         "type": "response", "id": id, "result": result
       ]),
       let json = String(data: data, encoding: .utf8) else { return }
-      self.webView.evaluateJavaScript(
-        "window._handleMessageFromNative(\(json))", completionHandler: nil)
+        // JSONSerialization 已完成安全序列化，再作为对象字面量传入；
+        // 不要把未经序列化的业务字符串插入 JavaScript。
+        self.webView.evaluateJavaScript(
+          "window._handleMessageFromNative(\(json))", completionHandler: nil)
     }
   }
 }

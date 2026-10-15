@@ -41,6 +41,8 @@ flowchart LR
 子应用需要在入口文件里把三个生命周期暴露出去：
 
 ```js
+// 以下是生命周期示意片段，createRoot/createRouter/App 需按实际技术栈实现。
+// 生命周期可以返回普通值；只有存在异步初始化时才需要返回 Promise。
 let root = null
 let router = null
 
@@ -65,20 +67,20 @@ export async function unmount(props) {
 
 有两个容易被忽略的细节：
 
-1. **每个生命周期函数都要返回 Promise**，qiankun 内部依赖它做异步编排；
+1. **生命周期支持异步返回值**。函数可以直接返回普通值；如果有异步初始化或清理，再返回 Promise，qiankun 会等待它完成；
 2. **应用要能“独立运行”，也能“被挂载运行”**，通常会通过一个运行时标识区分：在微前端环境下才使用 `props.container`，否则直接挂到自己的 `#app` 上。
 
 ### 2.2 第二步：配置打包格式，让产物“能被找到”
 
 qiankun 通过 HTML Entry 拿到子应用的入口 HTML 后，需要把里面的 JS 拿到沙箱里执行，并读取它挂在全局的生命周期函数。这就要求**子应用的构建产物最后要暴露成一个全局变量**（经典的 UMD/`library` 形态）。
 
-以 webpack 为例，需要把入口产物暴露成库：
+以 webpack 4/qiankun 2.x 常见的 UMD 接入方式为例，需要把入口产物暴露成库；webpack 5 项目还要结合自身的 runtime chunk、jsonp 配置和部署方式验证：
 
 ```js
 // webpack.config.js
 output: {
   library: 'subAppDashboard', // 产物挂在 window.subAppDashboard 上
-  libraryTarget: 'umd',
+  libraryTarget: 'umd',       // webpack 4/qiankun 2.x 常见写法
   jsonpFunction: `webpackJsonp_${name}`,
   globalObject: 'window',
 }

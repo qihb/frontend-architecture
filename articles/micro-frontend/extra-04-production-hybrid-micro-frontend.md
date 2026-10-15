@@ -96,7 +96,7 @@ const widgetApp = loadMicroApp({
 // widgetApp.unmount()
 ```
 
-配套案例里，[shell-app](../../examples/micro-frontend/qiankun-production-lab/shell-app/src/main.js) 正是“混合形态”：
+配套案例里，[shell-app](../../examples/micro-frontend/qiankun-production-lab/shell-app/src/main.jsx) 正是“混合形态”：
 
 - 左侧主区域用 `registerMicroApps` 在 CRM 和审批中心之间整页切换；
 - 右侧客户画像卡片始终用 `loadMicroApp` 挂着，与主路由无关。
@@ -139,7 +139,7 @@ qiankun 3 的核心变化是运行时重写与原生 ESM 支持，方向是更�
 
 ```text
 qiankun3-lab/
-├── host-app   # 依赖 qiankun@^3.0.0-rc.22，http://localhost:7300
+  ├── host-app   # 本文核验基于 qiankun@^3.0.0-rc.22，http://localhost:7300
 └── esm-app    # 原生 ESM 入口子应用，http://localhost:7301
 ```
 
@@ -157,7 +157,7 @@ export { bootstrap, mount, unmount }
 
 一点实测记录（本文写作时基于 `3.0.0-rc.22`）：qiankun 3 rc 的 `registerMicroApps` 要求 `container` 传已经解析好的 DOM 元素，而不是像 2.x 那样接受字符串选择器；传入字符串会在加载阶段报 `Invalid value used as weak map key`。rc 版本接口仍在演进，任何接入尝试前都值得先做一次最小冒烟验证，而这也正是把这个 lab 单独分开的原因。
 
-这一点也在案例里明确写进了注释：**它适合验证能力，不适合直接当生产标准答案。**
+这一点也在案例里明确写进了注释：**它适合验证能力，不适合直接当生产标准答案。换用其他 rc 版本前，必须重新核对 `container` 类型和生命周期 API。**
 
 ## 七、启动与验证
 
@@ -188,7 +188,7 @@ npm install
 npm run dev:qiankun3
 ```
 
-访问 `http://localhost:7300`，观察 esm-app 是否被挂载，Console 中应出现 `[esm-app] bootstrap` 与 `[esm-app] mount` 日志。
+访问 `http://localhost:7300`，观察 esm-app 是否被挂载，Console 中应出现 `[esm-app] bootstrap` 与 `[esm-app] mount` 日志；若未出现，先检查 7301 端口、CORS/模块加载错误，再检查 `container` 是否传入 DOM 元素。
 
 ## 八、生产决策清单
 

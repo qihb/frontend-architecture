@@ -89,13 +89,13 @@ body {
 
 在讲落地之前，先把第 4 篇 §5 的机制快速捡回来，重点补上「实战中它们到底挡不住什么」。
 
-### 2.1 默认行为：只管「装卸」，不管「隔离」
+### 2.1 默认行为：只管「装卸」，不管「隔离」（qiankun 2.x 语境）
 
 qiankun 2.x 默认**不开启**样式隔离。它默认做的是样式资源的生命周期管理：HTML Entry 解析出子应用的 `<link>`/`<style>`，挂载时插入、卸载时移除（第 4 篇 §5.1）。
 
 这解决的是「子应用切出后样式不残留」，是**资源管理**（本篇第六节的路线四），不是**隔离**。主应用与子应用之间、多实例场景下子应用之间的样式冲突，默认完全裸奔。
 
-### 2.2 strictStyleIsolation：罩得住组件树，罩不住弹层
+### 2.2 strictStyleIsolation：罩得住组件树，罩不住弹层（qiankun 2.x 语境）
 
 `strictStyleIsolation: true` 把子应用容器变成 Shadow DOM，子应用的所有 DOM 和样式都收进 Shadow Root——外部样式渗不进来，内部样式漏不出去（第 4 篇 §5.2）。
 
@@ -122,7 +122,7 @@ flowchart LR
 
 除此之外还有一层「反直觉失效」：子应用习惯把全局样式写在 `html`/`body`/`:root` 上，而 Shadow Root 里**根本没有这些元素**——子应用的全局字体、rem 基准、body 级 reset 会集体失效，表现为「开了严格隔离，子应用布局反而漂了」。这正是 4.2 节的主角。
 
-### 2.3 experimentalStyleIsolation：scoped 改写的覆盖面
+### 2.3 experimentalStyleIsolation：scoped 改写的覆盖面（qiankun 2.x 语境）
 
 `experimentalStyleIsolation: true` 走的是另一条路：运行时把子应用的样式规则逐条改写，加上容器前缀（第 4 篇 §5.3 的 `.header → div[data-qiankun="app-a"] .header`）。
 

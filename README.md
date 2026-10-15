@@ -6,7 +6,7 @@
 
 | 专栏 | 简介 | 文章数 | 目录 |
 |------|------|--------|------|
-| [微前端架构](#微前端架构--从入门到生产落地) | 从演进动机到方案选型，到 qiankun/Module Federation 实战，到治理与发布 | 14 篇 + 4 篇番外 + 2 个案例 | [专栏导读](articles/micro-frontend/README.md) |
+| [微前端架构](#微前端架构--从入门到生产落地) | 从演进动机到方案选型，到 qiankun/Module Federation 实战，到治理与发布 | 14 篇 + 5 篇番外 + 2 个案例 | [专栏导读](articles/micro-frontend/README.md) |
 | [工程化、测试与 AI](#工程化测试与-ai--前端研发效能提升实战) | 构建工具、Monorepo、CI/CD、分层测试体系、AI 辅助编码与审查 | 14 篇 | [专栏导读](articles/engineering-and-testing/README.md) |
 | [跨端开发](#跨端开发--一套代码多端复用) | 跨端动机、底层原理、Flutter/RN/小程序/桌面四大路线、工程实践与趋势 | 12 篇 + 1 篇番外 + 1 个案例 | [专栏导读](articles/cross-platform/README.md) |
 | [性能与体验优化](#性能与体验优化--从度量到ai驱动的优化实战) | 性能与体验的度量方法、Web/移动/桌面分端优化、体验优化与 AI 提效 | 15 篇 + 2 篇番外 | [专栏导读](articles/performance-and-experience/README.md) |
@@ -20,7 +20,7 @@
 
 ### 微前端架构——从入门到生产落地
 
-> [专栏导读](articles/micro-frontend/README.md) · 14 篇正文 + 4 篇番外 + 2 个配套案例
+> [专栏导读](articles/micro-frontend/README.md) · 14 篇正文 + 5 篇番外 + 2 个配套案例
 
 **正文（14 篇）**
 
@@ -36,7 +36,7 @@
 - [第十篇：微前端性能优化实战](articles/micro-frontend/10-performance-optimization.md)
 - 第十一篇：微前端治理与发布体系——从接入规范到灰度回滚（未完成）
 - 第十二篇：微前端测试与联调策略——主子应用如何稳定协作（未完成）
-- 第十三篇：微前端与 Monorepo——如何协同管理大型项目（未完成）
+- [第十三篇：微前端与 Monorepo——如何协同管理大型项目](articles/micro-frontend/13-monorepo-collaboration.md)
 - 第十四篇：微前端落地总结与架构决策（未完成）
 
 **番外篇（5 篇）**
@@ -58,8 +58,8 @@
 
 **工程化篇（6 篇）**
 
-- 第一篇：前端工程化全景图——从构建到部署的完整链路（未完成）
-- 第二篇：构建工具演进——从 Webpack 到 Vite 再到 Rspack（未完成）
+- [第一篇：前端工程化全景图——从构建到部署的完整链路](articles/engineering-and-testing/01-engineering-overview.md)
+- [第二篇：构建工具演进——从 Webpack 到 Vite 再到 Rspack](articles/engineering-and-testing/02-build-tools-evolution.md)
 - 第三篇：脚手架与项目模板——标准化研发的起点（未完成）
 - 第四篇：Monorepo 策略——pnpm workspace 与 Turborepo 实战（未完成）
 - 第五篇：代码规范与质量门禁——ESLint、Prettier 与 Git Hooks（未完成）

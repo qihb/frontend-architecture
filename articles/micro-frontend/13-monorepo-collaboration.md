@@ -163,8 +163,9 @@ packages:
 ```
 
 ```yaml
-# pnpm-workspace.yaml（续）：pnpm >= 9.5 的 catalogs
-# 把公共依赖的版本口径集中声明在一处，所有包用 "catalog:" 引用
+# pnpm-workspace.yaml：catalogs 示例
+# catalogs 的语法和最低版本以当前 pnpm 官方文档为准；
+# 不同 pnpm 版本升级前应先在 CI 中验证。
 catalog:
   react: ^18.3.1
   react-dom: ^18.3.1
@@ -485,7 +486,7 @@ flowchart LR
 
 ### 7.2 lockfile 管理口径：一个仓库，一份 lockfile
 
-同仓方案必须坚持**根目录唯一 `pnpm-lock.yaml`**：所有应用与共享包的依赖解析结果集中在一处，任何影响依赖树的变更都会体现在 lockfile diff 里，可评审、可回滚。CI 安装一律 `pnpm install --frozen-lockfile`，杜绝「CI 悄悄解析出与本地不同的依赖树」。
+对本专栏讨论的单 workspace 同仓方案，推荐使用**根目录唯一 `pnpm-lock.yaml`**：所有应用与共享包的依赖解析结果集中在一处，任何影响依赖树的变更都会体现在 lockfile diff 里，可评审、可回滚。多 workspace、独立发布或刻意隔离依赖的仓库可能采用不同布局；CI 仍建议使用 `pnpm install --frozen-lockfile`，杜绝「CI 悄悄解析出与本地不同的依赖树」。
 
 两个配套纪律：
 
